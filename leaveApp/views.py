@@ -1,11 +1,40 @@
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render
-from .forms import LeaveRequestForm
+from .forms import LeaveRequestForm , RegisterForm
 from .models import LeaveRequest
 
 # Create your views here.
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib.auth import login
+from .forms import RegisterForm
+
+def register_view(request):
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user_type = form.cleaned_data.get("user_type")
+
+            # إنشاء المستخدم
+            user = User.objects.create_user(username=username, password=password)
+
+            # تعيين نوع المستخدم
+            user.is_staff = user_type == 'staff'
+            user.save()
+
+            # تسجيل الدخول
+            login(request, user)
+            return redirect('login')
+    else:
+        form = RegisterForm()
+        
+    return render(request, 'accounts/register.html', {'form': form})
+            
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -69,3 +98,11 @@ def admin_page(request):
         leave.save()
     leaves = LeaveRequest.objects.all().order_by('-submitted_at')
     return render(request, 'accounts/admin_page.html', {'leaves': leaves})
+
+
+def logout_view(request):
+     if request.method == "POST":
+         logout(request)
+         return redirect('login')
+     else:
+         return redirect('login')

@@ -3,7 +3,7 @@
 <html>
 <head>
   <title>Admin Leave Requests</title>
-  <link rel="stylesheet" href="{% static 'accounts/style.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
 </head>
 <body>
 
@@ -44,5 +44,10 @@
   {% endfor %}
 </table>
 
+<form action="{% url 'logout' %}" method="POST">
+  {% csrf_token %}
+  <button type="submit">
+     Logout
+  </button>
 </body>
 </html>
