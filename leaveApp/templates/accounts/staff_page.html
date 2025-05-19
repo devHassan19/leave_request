@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Staff Leave Requests</title>
+  <link rel="stylesheet" href="{% static 'accounts/style.css' %}">
+</head>
+<body>
+
+<h2>Leave Request</h2>
+
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Submit</button>
+</form>
+
+{% if message %}
+<p>{{ message }}</p>
+{% endif %}
+
+<h3>Your Leave Requests</h3>
+<table border="1" cellpadding="5">
+  <tr>
+    <th>Leave Type</th>
+    <th>Status</th>
+    <th>Attachment</th>
+    <th>Submitted At</th>
+  </tr>
+  {% for leave in user_leaves %}
+  <tr>
+    <td>{{ leave.leave_type }}</td>
+    <td>{{ leave.status }}</td>
+    <td><a href="{{ leave.attachment.url }}" target="_blank">View</a></td>
+    <td>{{ leave.submitted_at|date:"Y-m-d H:i" }}</td>
+  </tr>
+  {% empty %}
+  <tr><td colspan="4">No requests found</td></tr>
+  {% endfor %}
+</table>
+
+</body>
+</html>

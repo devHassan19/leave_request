@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Leave Requests</title>
+  <link rel="stylesheet" href="{% static 'accounts/style.css' %}">
+</head>
+<body>
+
+<h2>Leave Requests</h2>
+<table border="1" cellpadding="10">
+  <tr>
+    <th>User</th>
+    <th>Leave Type</th>
+    <th>Attachment</th>
+    <th>Status</th>
+    <th>Action</th>
+  </tr>
+  {% for leave in leaves %}
+  <tr>
+    <td>{{ leave.user.username }}</td>
+    <td>{{ leave.leave_type }}</td>
+    <td><a href="{{ leave.attachment.url }}" target="_blank">View Attachment</a></td>
+    <td>{{ leave.status }}</td>
+    <td>
+      {% if leave.status == 'Pending' %}
+      <form method="POST" style="display:inline;">
+        {% csrf_token %}
+        <input type="hidden" name="leave_id" value="{{ leave.id }}">
+        <button type="submit" name="action" value="approve">Approve</button>
+      </form>
+      <form method="POST" style="display:inline;">
+        {% csrf_token %}
+        <input type="hidden" name="leave_id" value="{{ leave.id }}">
+        <button type="submit" name="action" value="reject">Reject</button>
+      </form>
+      {% else %}
+      {{ leave.status }}
+      {% endif %}
+    </td>
+  </tr>
+  {% empty %}
+  <tr><td colspan="5">No requests found</td></tr>
+  {% endfor %}
+</table>
+
+</body>
+</html>
