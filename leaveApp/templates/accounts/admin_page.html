@@ -3,12 +3,12 @@
 <html>
 <head>
   <title>Admin Leave Requests</title>
-  <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/admin.css' %}">
 </head>
 <body>
 
 <h2>Leave Requests</h2>
-<table border="1" cellpadding="10">
+<table>
   <tr>
     <th>User</th>
     <th>Leave Type</th>
@@ -46,8 +46,8 @@
 
 <form action="{% url 'logout' %}" method="POST">
   {% csrf_token %}
-  <button type="submit">
-     Logout
-  </button>
+  <button type="submit">Logout</button>
+</form>
+
 </body>
 </html>

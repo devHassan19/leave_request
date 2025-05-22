@@ -19,14 +19,12 @@ def register_view(request):
             password = form.cleaned_data.get("password")
             user_type = form.cleaned_data.get("user_type")
 
-            # إنشاء المستخدم
             user = User.objects.create_user(username=username, password=password)
 
-            # تعيين نوع المستخدم
             user.is_staff = user_type == 'staff'
             user.save()
 
-            # تسجيل الدخول
+           
             login(request, user)
             return redirect('login')
     else:

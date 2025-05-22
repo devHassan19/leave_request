@@ -3,24 +3,24 @@
 <html>
 <head>
   <title>Staff Leave Requests</title>
-  <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/staff.css' %}">
 </head>
 <body>
 
 <h2>Leave Request</h2>
 
-<form method="POST" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data" class="leave-request-form">
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit">Submit</button>
 </form>
 
 {% if message %}
-<p>{{ message }}</p>
+<p class="message">{{ message }}</p>
 {% endif %}
 
 <h3>Your Leave Requests</h3>
-<table border="1" cellpadding="5">
+<table>
   <tr>
     <th>Leave Type</th>
     <th>Status</th>
@@ -39,11 +39,10 @@
   {% endfor %}
 </table>
 
-<form action="{% url 'logout' %}" method="POST">
+<form action="{% url 'logout' %}" method="POST" class="logout-form">
   {% csrf_token %}
-  <button type="submit">
-     Logout
-  </button>
+  <button type="submit">Logout</button>
 </form>
+
 </body>
 </html>

@@ -5,12 +5,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Login</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'styles/styles.css' %}"/>
-  <style>
-    .error{
-      color: red;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}"/>
 </head>
 <body>
   <div class="container">
@@ -30,8 +25,8 @@
        {% if error %}
            <p class="error">{{ error }}</p>
        {% endif %}
-       <p>Don't have an account ? <a href="{% url 'register' %}">Register Here</a></p>
+       {% comment %} <p>Don't have an account? <a href="{% url 'register' %}">Register Here</a></p> {% endcomment %}
      </form>
-    </div>
+  </div>
 </body>
 </html>
